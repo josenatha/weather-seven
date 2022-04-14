@@ -1,23 +1,33 @@
-import logo from './logo.svg';
+
+import { useEffect, useState   } from 'react';
 import './App.css';
+import './utils/styles.css'
+import { getWeather } from './utils/getWeather';
+import { WeatherCard } from './components/WeatherCard';
+
 
 function App() {
+  const [data, setdata] = useState()
+  
+  useEffect(() => {
+    getWeather(setdata)
+    
+  }, [])
+  
+  
+  
+  console.log(data)
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App app " >
+      
+      
+      {data &&
+      <>
+    
+      <WeatherCard city={data.name}   country={data.sys.country} weather={data.weather[0].description} temp={data.main.temp} icon={data.weather[0].icon} />
+      </>      
+      }
     </div>
   );
 }
